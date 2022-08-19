@@ -2,12 +2,12 @@
 while getopts s:n: flag
 do
     case "${flag}" in
-        n) name=${OPTARG};;
-        s) size=${OPTARG};;
+       s) size=${OPTARG};;
+       n) name=${OPTARG};;
           esac
 done
 gen  ()
-{ head -c "$size" -z </dev/urandom > /tmp/keyfile && sed -i '$d' /tmp/keyfile  
+{ head -c "$size" -z </dev/urandom > /tmp/keyfile  
  } 
 
 hasher () 
@@ -19,3 +19,4 @@ hasher ()
 gen && hasher keyfile | tee "$name" &&  truncate --size "$size" "$name"
 
 exit
+
