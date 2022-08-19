@@ -1,14 +1,21 @@
 #! /bin/bash
+while getopts s:n: flag
+do
+    case "${flag}" in
+        n) name=${OPTARG};;
+        s) size=${OPTARG};;
+          esac
+done
 gen  ()
-{ head -c 1024K -z </dev/urandom | hexdump -C -n 1024 > keyfile && sed -i '$d' keyfile  
+{ head -c "$size" -z </dev/urandom > /tmp/keyfile && sed -i '$d' /tmp/keyfile  
  } 
 
 hasher () 
-{ cat "keyfile" | while read -r line; do
-    printf %s "$line" | sha512sum | cut -f1 -d' '
+{ cat /tmp/keyfile | while read -r line; do
+    printf %s "$line" | sha512sum  | cut -f1 -d' '
 
     done; }
 
-gen && hasher keyfile | tee key && rm keyfile
+gen && hasher keyfile | tee "$name" &&  truncate --size "$size" "$name"
 
 exit
