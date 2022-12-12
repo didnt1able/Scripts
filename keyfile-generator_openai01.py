@@ -1,3 +1,4 @@
+#written by openai
 import os
 import hashlib
 
