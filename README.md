@@ -10,3 +10,8 @@ Hasher usage
 ```
 ./hasher.sh input.txt | output.txt
 ```
+
+Rain Folder Watcher 
+```
+This script watches for new files in folder and adds them to rain bittorrent client
+```
